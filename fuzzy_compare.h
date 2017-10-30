@@ -1,5 +1,5 @@
-#ifndef __FuzzyCompare_H_INCLUDED__
-#define __FuzzyCompare_H_INCLUDED__
+#ifndef __fuzzy_compare_H_INCLUDED__
+#define __fuzzy_compare_H_INCLUDED__
 #include <string>	//cout,cin
 
 namespace util_lib{

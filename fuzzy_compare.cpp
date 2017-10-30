@@ -1,4 +1,4 @@
-#include "FuzzyCompare.h"
+#include "fuzzy_compare.h"
 #include <string>
 #include <algorithm>    // min,max
 
