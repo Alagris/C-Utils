@@ -10,7 +10,6 @@ inline size_t min(const size_t a,const size_t b ){
 inline unsigned int max(const unsigned int a,const unsigned int b ){
 	return a>b? a: b;
 }
-const unsigned int searchRangeExcluding = 4;
 /**Returned value is always bigger or equal 0
 * Very fuzzy,default method)could skip some letters in mainWord if distance is too far*/
 unsigned int util_lib::fuzzyCompare(const string & w1, const string & w2){
@@ -28,7 +27,7 @@ unsigned int util_lib::fuzzyCompare(const string & w1, const string & w2){
 	const int searchRangeExcluding = 4;
 	for(size_t s=0,e=searchRangeExcluding,c=0;c<w2.size() && s < e;c++){
 		//iterating through chars in w2
-		size_t b;
+		size_t b = 0;
 		for(size_t a =c;a <w2.size();a++){
 			//iterating through current part in w1
 			b=s;
@@ -38,7 +37,7 @@ unsigned int util_lib::fuzzyCompare(const string & w1, const string & w2){
 					c = a;
 					goto breakSecondLoop;
 				}else if(tolower(w1[b]) == tolower(w2[a])){
-					output += int(max(searchRangeExcluding-(b-s)-1,0));
+					output += int(max(int(searchRangeExcluding-(b-s))-1,0));
 					c = a;
 					goto breakSecondLoop;
 				}
@@ -54,7 +53,7 @@ unsigned int util_lib::fuzzyCompare(const string & w1, const string & w2){
 
 /**(not so fuzzy)doesn't skip any letters and only analyzes distance between them.Is faster than 1*/
 unsigned int util_lib::fuzzyCompare2(const string & w1, const string & w2){
-	int output=w1.size();//half of maximal similarity rate 
+	int output=int(w1.size());//half of maximal similarity rate
 	for(size_t i = 0,j=0,distance=0;i<w1.size();i++){
 		if(w1[i]==w2[j]){
 			output-= int(distance);
@@ -72,14 +71,14 @@ unsigned int util_lib::fuzzyCompare2(const string & w1, const string & w2){
 }
 
 /**(reverse,only a little bit more fuzzy than 2) skips maximally one letter.All input works as base of phrases that algorithm will try to find in mainWord.*/
-unsigned int util_lib::fuzzyCompare3(const string & w1, const string & w2,int * startIncluding ,int *endIncluding ){
+unsigned int util_lib::fuzzyCompare3(const string & w1, const string & w2,long * startIncluding ,long *endIncluding ){
 	float localSumMax = 0;
 	for(size_t i = 0;i<w2.size();i++){
 		for(size_t j =0;j<size_t(w1.size()*0.7);j++){
 
 			if(tolower(w1[j])==tolower(w2[i])){
 				float localSum = 0.5;
-				int localStartIncluding=i;
+				long localStartIncluding=long(i);
 				if(w1[j]==w2[i]){
 					localSum+=0.5;
 				}
